@@ -4,6 +4,7 @@ int64 Lucas_theorm(int64 n,int64 r,int64 p){
     while(n || r){
         if(n%p < r%p) return 0;
         ans *= ((fact[n%p]%p * BigMod(fact[r%p],p-2,p))%p * BigMod(fact[n%p - r%p],p-2,p))%p;
+        ans %= p;
         n /= p;
         r /= p;
     }
