@@ -41,11 +41,7 @@ struct triangle {
         r = r.rotate(P,angle);
     }
 
-    void translate(point v) {
-        p.translate(v);
-        q.translate(v);
-        r.translate(v);
-    }
+   
 #define TRI_NONE    0
 #define TRI_ACUTE   1
 #define TRI_RIGHT   2
