@@ -320,6 +320,56 @@ struct circle {
         a2=a2*v.r*v.r;
         return a1+a2-ss;
     }
+    /*
+    needed for polygon
+    int pointcrossline(line v,point &p1,point &p2)//求与线段交要先判断relationseg
+    {
+        if (!(*this).relationline(v))return 0;
+        point a=v.lineprog(p);
+        double d=v.dispointtoline(p);
+        d=sqrt(r*r-d*d);
+        if (EQ(d)==0)
+        {
+            p1=a;
+            p2=a;
+            return 1;
+        }
+        p1=a.sub(v.b.sub(v.a).trunc(d));
+        p2=a.add(v.b.sub(v.a).trunc(d));
+        return 2;
+    }
+    double areatriangle(point a,point b)
+    {
+        if (EQ(p.sub(a).cross(p.sub(b))==0))return 0.0;
+        point q[5];
+        int len=0;
+        q[len++]=a;
+        line l(a,b);
+        point p1,p2;
+        if (pointcrossline(l,q[1],q[2])==2)
+        {
+            if (EQ(a.sub(q[1]).dot(b.sub(q[1])))<0)q[len++]=q[1];
+            if (EQ(a.sub(q[2]).dot(b.sub(q[2])))<0)q[len++]=q[2];
+        }
+        q[len++]=b;
+        if (len==4&&(EQ(q[0].sub(q[1]).dot(q[2].sub(q[1])))>0))swap(q[1],q[2]);
+        double res=0;
+        int i;
+        for (i=0;i<len-1;i++)
+        {
+            if (relation(q[i])==0||relation(q[i+1])==0)
+            {
+                double arg=p.rad(q[i],q[i+1]);
+                res+=r*r*arg/2.0;
+            }
+            else
+            {
+                res+=fabs(q[i].sub(p).cross(q[i+1].sub(p))/2.0);
+            }
+        }
+        return res;
+    }
+    */
 };
 
 int turn( point O , point A , point B) { //
