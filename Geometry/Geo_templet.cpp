@@ -402,3 +402,14 @@ point ProjectPointSegment(point a, point b, point c) {
 db lattice_pts(point a,point b) {
     return __gcd(llabs(a.y - b.y), llabs(a.x - b.x)) + 1;
 }
+db DistenceLatLon(point l1, point l2)
+{
+    db R = 6371009; // for earth
+    db a,b,c,d,e,det1,det2;
+    det1 = l2.x - l1.x;
+    det2 = l2.y - l1.y;
+    a = sin(det1/2.)*sin(det1/2.) + cos(l1.x)*cos(l2.x)*sin(det2/2.)*sin(det2/2.);
+    c = 2*atan2(sqrt(a), sqrt(1. - a));
+    d = R*c;
+    return d;
+}
