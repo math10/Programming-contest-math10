@@ -9,15 +9,15 @@ struct triangle {
     triangle(double a,double b,double c) : a(a) ,b(b) ,c(c) {}
 
     double thetaA() {
-        return acos((sqr(b) + sqr(c) - sqr(a)) / (2*a));
+        return acos((sqr(b) + sqr(c) - sqr(a)) / (2*b*c));
     }
 
     double thetaB() {
-        return acos((sqr(a) + sqr(c) - sqr(b)) / (2*b));
+        return acos((sqr(a) + sqr(c) - sqr(b)) / (2*a*c));
     }
 
     double thetaC() {
-        return acos((sqr(b) + sqr(a) - sqr(c)) / (2*c));
+        return acos((sqr(b) + sqr(a) - sqr(c)) / (2*a*b));
     }
 
     void thetaAll(double A[]) {
@@ -41,7 +41,7 @@ struct triangle {
         r = r.rotate(P,angle);
     }
 
-   
+
 #define TRI_NONE    0
 #define TRI_ACUTE   1
 #define TRI_RIGHT   2
