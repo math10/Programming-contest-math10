@@ -77,17 +77,7 @@ struct point {
         double loy = min(a.y, b.y), hiy = max(a.y, b.y);
         return c.x >= lox && c.x <= hix && c.y >= loy && c.y <= hiy; // remove = (eq) if strictly in box need
     }
-    bool doOverlap(point l1, point r1, point l2, point r2) { // Find if two rectangles overlap l1,l2 = top left ; r1,r2 = bottom right;
-        // If one rectangle is on left side of other
-        if (l1.x > r2.x || l2.x > r1.x)
-            return false;
     
-        // If one rectangle is above other
-        if (l1.y < r2.y || l2.y < r1.y)
-            return false;
-    
-        return true;
-    }
 
 };
 
@@ -424,4 +414,14 @@ db DistenceLatLon(point l1, point l2)
     c = 2*atan2(sqrt(a), sqrt(1. - a));
     d = R*c;
     return d;
+}
+
+bool doOverlap(point l1, point r1, point l2, point r2) { // Find if two rectangles overlap l1,l2 = top left ; r1,r2 = bottom right;
+    // If one rectangle is on left side of other
+    if (l1.x > r2.x || l2.x > r1.x)
+        return false;
+    // If one rectangle is above other        
+    if (l1.y < r2.y || l2.y < r1.y)
+        return false;
+    return true;
 }
