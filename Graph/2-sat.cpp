@@ -32,7 +32,7 @@ int main(){
 	vector<int> v;
 	int i,x,y,n,m,t,cs = 1;
 	char ch1,ch2;
-	
+
 	scanf("%d",&t);
 	while(t--){
 		scanf("%d %d",&m,&n);
@@ -43,6 +43,12 @@ int main(){
 			scanf(" %c%d %c%d",&ch1,&x,&ch2,&y);
 			x = giveNode(x-1,ch1);
 			y = giveNode(y-1,ch2);
+			/*
+			+x +y ,take x or take y
+			+x -y ,take x or remove y
+			-x +y ,remove x or take y
+			-x -y, remove x or remove y
+			*/
 			g[x^1].pb(y);
 			g[y^1].pb(x);
 
