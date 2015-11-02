@@ -115,7 +115,7 @@ int64 BigMod(int64 B,int64 P,int64 M) {
     return (int64)R;
 }
 int64 modInverse_prime(int64 B,int64 P) {
-    return BigMod(B,P-2,P);
+    return BigMod(B,P-1,P);
 }
 int64 modInverse_relativePrime(int64 B,int64 P) {
     return eea(B,P).second.first;
@@ -124,7 +124,14 @@ int64 modInverse_relativePrime(int64 B,int64 P) {
 int64 mod;
 int64 fact[mx+5];
 vector<pii >primeDivisors;
-
+vector<int64 >L;
+vector<int64>N ;
+vector<int64>R ;
+vector<int64>M ;
+vector<int64>N_js ;
+vector<int64>M_js ;
+vector<int64>R_js;
+vector<int64 >e;
 void generatefactorial(int64 p) {
     fact[0] = fact[1 ]= 1;
     int64 i;
@@ -134,39 +141,42 @@ void generatefactorial(int64 p) {
     }
 }
 
+vector<int64 >v;
 vector<int64 > tobase(int64 a,int64 b) {
-    vector<int64 >v;
+    v.clear();
     while(a) {
         v.pb(a%b);
         a /= b;
     }
     return v;
 }
-
+vector<int64 >tmp;
 vector<int64 > compute_js(vector<int64 >v,int64 p,int64 q) {
     int64 len = v.size();
-    vector<int64 >tmp;
+    tmp.clear();
+    tmp.resize(len);
     rep(i,len) {
         int64 a = 0,P = 1;
         for(int64 j = i; j<len && j < i+q ; j++) {
             a += (v[j]*P);
             P *= p;
         }
-        tmp.pb(a);
+        tmp[i] = a;
     }
     return tmp;
 }
 
 vector<int64 > computeE(int64 len,vector<int64 >M,vector<int64 >R,int64 p) {
     int64 m = M.size(),r = R.size(),c = 0;
-    vector<int64>tmp;
+    tmp.clear();
+    tmp.resize(len);
     forab(i,m,len-1) M.pb(0);
     forab(i,r,len-1) R.pb(0);
     rep(i,len) {
         c += M[i];
         c += R[i];
         c /= p;
-        tmp.pb(c);
+        tmp[i] = c;
     }
     per(i,len-1) tmp[i] = tmp[i] + tmp[i+1];
     return tmp;
@@ -176,14 +186,14 @@ vector<int64 > computeE(int64 len,vector<int64 >M,vector<int64 >R,int64 p) {
 
 int64 generelize_lucas_theoram(int64 n,int64 r,int64 p,int64 q) {
     int64 m = (n-r);
-    vector<int64>N = tobase(n,p);
-    vector<int64>R = tobase(m,p);
-    vector<int64>M = tobase(r,p);
-    vector<int64>N_js = compute_js(N,p,q);
-    vector<int64>M_js = compute_js(M,p,q);
-    vector<int64>R_js = compute_js(R,p,q);
+    N = tobase(n,p);
+    R = tobase(m,p);
+    M = tobase(r,p);
+    N_js = compute_js(N,p,q);
+    M_js = compute_js(M,p,q);
+    R_js = compute_js(R,p,q);
     int64 n_len = N.size() , m_len = M.size() , r_len = R.size();
-    vector<int64 >e =computeE(n_len,R,M,p);
+    e =computeE(n_len,R,M,p);
     int64 ans = 1;
     mod = Pow(p,q);
     generatefactorial(p);
@@ -218,7 +228,7 @@ void generate_primeDivisors(int64 n) {
 }
 
 
-int64 Chinese_Remainder_Theorem(vector<int64 >L,int64 m) {
+int64 Chinese_Remainder_Theorem(int64 m) {
     int i = 0;
     int64 ans = 0;
     forstl(it,primeDivisors) {
@@ -239,11 +249,10 @@ int main() {
     int t = II;
     rep(i,t) {
         n = IL, r = IL;
-        vector<int64 >L;
         L.clear();
         forstl(it,primeDivisors) {
             L.pb(generelize_lucas_theoram(n,r,(*it).first,(*it).second));
         }
-        cout << Chinese_Remainder_Theorem(L,m) << endl;
+        printf("%lld\n",Chinese_Remainder_Theorem(m));
     }
 }
